@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to do</title>
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/animate.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet" />
+
+  <style>
+
+    /* Loader Skeleton */
+    .card.skeleton .card-img,
+    .card.skeleton .card-text div {
+      background: linear-gradient(90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    .card.skeleton .card-img {
+      height: 70%;
+    }
+
+    .card.skeleton .card-text {
+      height: 30%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+
+    .card.skeleton .card-text div {
+      height: 15px;
+      border-radius: 4px;
+    }
+
+    .card.skeleton .card-text div:nth-child(1) {
+      width: 80%;
+    }
+
+    .card.skeleton .card-text div:nth-child(2) {
+      width: 90%;
+    }
+
+    .card.skeleton .card-text div:nth-child(3) {
+      width: 70%;
+    }
+
+    /* Loaded Card */
+    .card.loaded .card-img {
+      height: 70%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .card.loaded .card-text {
+      height: 30%;
+    }
+
+    .card.loaded .card-text h4 {
+      font-size: 1.25rem;
+      color: #333;
+    }
+
+    .card.loaded .card-text p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    /* Keyframes */
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    .pagination-container {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pagination-button {
+      padding: 10px 15px;
+      background-color: #ddd;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .pagination-button.active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .pagination-button:disabled {
+      background-color: #bbb;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body class="p-10">
+  <main class="w-full d-flex flex-row flex-wrap gap-20 justify-center p-5 pb-20">
+
+
+    <!-- <div class="card loaded aspect-ratio-1 col-2 rounded-2xl overflow-hidden shadow-xl hover-scale-10 transition-default">
+        <div
+          class="card-img"
+          style="background-image: url('../source/img/pokemon.png')"
+        ></div>
+        <div class="card-text p-4">
+          <h4>Título de la tarjeta</h4>
+          <p>Descripción breve del contenido.</p>
+        </div>
+      </div> -->
+
+  </main>
+
+  <div class="pagination-container">
+    <button class="pagination-button previous" disabled>&lt;</button>
+    <div class="pagination-numbers d-flex flex-row gap-2"></div>
+    <button class="pagination-button next">&gt;</button>
+  </div>
+
+  <script src="./scripts/FetchAPI.js"></script>
+
+  <script>
+    const api = new FetchAPI("https://pokeapi.co/api/v2/");
+
+    // Función principal para cargar datos de Pokémon
+    api.get("pokemon?offset=0&limit=15", 30000, (result, error) => {
+      if (error) {
+        console.error("Error con callback:", error);
+      } else {
+
+         // Inicialización
+        createPagination({
+          totalItems: result.count,
+          itemsPerPage: 15,
+          maxButtons: 6,
+          onPageChange: (page) => {
+            console.log(`Página actual: ${page}`);
+            
+            document.querySelector("main").innerHTML = "";
+            createSkeletonCards(15);
+
+            // Función principal para cargar datos de Pokémon
+            api.get(`pokemon?offset=${page * 10 - 5}&limit=15`, 30000, (result, error) => {
+              if (error) {
+                console.error("Error con callback:", error);
+              } else {
+                GetPokemonInfo(result.results);
+              }
+            });
+
+          },
+        });
+
+        GetPokemonInfo(result.results);
+      }
+    });
+
+    // Obtener información detallada de cada Pokémon
+    async function GetPokemonInfo(results) {
+      const promises = results.map((v) => api.get("", 30000, null, v.url));
+
+      try {
+        const pokemonData = await Promise.all(promises);
+
+        const pokemonInfo = pokemonData.map((v) => ({
+          name: v.name,
+          img: v.sprites.other["official-artwork"].front_default,
+        }));
+
+        console.log(pokemonInfo);
+
+        // Actualizar el contenido del DOM
+        deleteAllSkeletonCards();
+        renderLoadedCards(pokemonInfo);
+      } catch (error) {
+        console.error("Error al obtener información de los Pokémon:", error);
+        deleteAllSkeletonCards();
+      }
+    }
+
+
+    function createPagination({
+      totalItems,
+      itemsPerPage,
+      maxButtons = 5,
+      onPageChange,
+    }) {
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      let currentPage = 1;
+
+      const paginationContainer = document.querySelector(
+        ".pagination-container"
+      );
+      const previousButton = paginationContainer.querySelector(".previous");
+      const nextButton = paginationContainer.querySelector(".next");
+      const numbersContainer = document.querySelector(".pagination-numbers");
+
+      // Actualiza la paginación
+      function updatePagination() {
+        numbersContainer.innerHTML = ""; // Limpia botones anteriores
+
+        // Determina el rango de botones a mostrar
+        const half = Math.floor(maxButtons / 2);
+        let start = Math.max(1, currentPage - half);
+        let end = Math.min(totalPages, currentPage + half);
+
+        // Ajusta si los botones visibles son menos que el máximo
+        if (currentPage <= half) {
+          end = Math.min(totalPages, maxButtons);
+        } else if (currentPage + half > totalPages) {
+          start = Math.max(1, totalPages - maxButtons + 1);
+        }
+
+        // Crea los botones dinámicos
+        for (let i = start; i <= end; i++) {
+          const button = document.createElement("button");
+          button.textContent = i;
+          button.classList.add("pagination-button");
+          if (i === currentPage) {
+            button.classList.add("active");
+          }
+          button.addEventListener("click", () => goToPage(i));
+          numbersContainer.appendChild(button);
+        }
+
+        // Actualiza el estado de los botones anterior/siguiente
+        previousButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
+      }
+
+      // Navegar a una página específica
+      function goToPage(page) {
+        currentPage = page;
+        updatePagination();
+        onPageChange(currentPage); // Notifica el cambio de página
+      }
+
+      // Maneja clics en los botones anterior/siguiente
+      previousButton.addEventListener("click", () => {
+        if (currentPage > 1) goToPage(currentPage - 1);
+      });
+
+      nextButton.addEventListener("click", () => {
+        if (currentPage < totalPages) goToPage(currentPage + 1);
+      });
+
+      // Inicializa la paginación
+      updatePagination();
+    }
+
+  </script>
+  <script>
+    // Función para crear tarjetas skeleton
+    function createSkeletonCards(count) {
+      const mainContainer = document.querySelector("main"); // Selecciona el contenedor principal
+      for (let i = 0; i < count; i++) {
+        const cardSkeleton = document.createElement("div");
+        cardSkeleton.classList.add(
+          "card",
+          "skeleton",
+          "aspect-ratio-1",
+          "col-2",
+          "rounded-2xl",
+          "overflow-hidden",
+          "shadow-xl",
+          "hover-scale-10",
+          "transition-default"
+        );
+
+        const cardSkeletonImg = document.createElement("div");
+        cardSkeletonImg.classList.add("card-img", "w-full");
+
+        const cardSkeletonText = document.createElement("div");
+        cardSkeletonText.classList.add("card-text", "w-full");
+
+        for (let j = 0; j < 3; j++) {
+          const textLine = document.createElement("div");
+          textLine.classList.add("skeleton-line");
+          cardSkeletonText.appendChild(textLine);
+        }
+
+        cardSkeleton.appendChild(cardSkeletonImg);
+        cardSkeleton.appendChild(cardSkeletonText);
+        mainContainer.appendChild(cardSkeleton);
+      }
+    }
+
+    // Función para eliminar todas las tarjetas skeleton
+    function deleteAllSkeletonCards() {
+      const mainContainer = document.querySelector("main");
+      const skeletonCards = mainContainer.querySelectorAll(".card.skeleton");
+
+      skeletonCards.forEach((card) => {
+        mainContainer.removeChild(card);
+      });
+    }
+
+    // Función para renderizar tarjetas cargadas (simulación de datos de la API)
+    function renderLoadedCards(pokemonInfo) {
+      const mainContainer = document.querySelector("main");
+
+      pokemonInfo.forEach((it) => {
+        const cardLoaded = document.createElement("div");
+        cardLoaded.classList.add(
+          "card",
+          "loaded",
+          "aspect-ratio-1",
+          "col-2",
+          "rounded-2xl",
+          "overflow-hidden",
+          "shadow-xl",
+          "hover-scale-10",
+          "transition-default"
+        );
+
+        const cardLoadedImg = document.createElement("div");
+        cardLoadedImg.classList.add("card-img", "w-full");
+        cardLoadedImg.style.backgroundImage = `url('${it.img}')`;
+
+        const cardLoadedText = document.createElement("div");
+        cardLoadedText.classList.add("card-text", "p-4");
+
+        const cardTitle = document.createElement("h4");
+        cardTitle.textContent = `Título ${it.name}`;
+
+        const cardDescription = document.createElement("p");
+        cardDescription.textContent = `Atrapalo!.`;
+
+        cardLoadedText.appendChild(cardTitle);
+        cardLoadedText.appendChild(cardDescription);
+        cardLoaded.appendChild(cardLoadedImg);
+        cardLoaded.appendChild(cardLoadedText);
+
+        mainContainer.appendChild(cardLoaded);
+      })
+
+      
+    }
+
+    // Mostrar skeletons mientras se cargan los datos
+    createSkeletonCards(15);
+
+  </script>
+</body>
+
+</html>

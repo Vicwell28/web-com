@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to do</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/animate.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .completed {
+        text-decoration: line-through;
+        padding-left: 22.5px;
+      }
+
+      .completed::before {
+        content: "";
+        position: absolute;
+        border-color: #fff;
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        top: calc(50% - 10px);
+        left: 5px;
+        transform: rotate(45deg);
+        height: 15px;
+        width: 7px;
+      }
+    </style>
+  </head>
+
+  <body class="p-8">
+    <!-- input with header  -->
+    <div class="row">
+      <p class="col-12 family-black uppercase text-center">My To Do List</p>
+      <div class="row col-12">
+        <div class="col-9">
+          <input
+            type="text"
+            name="todo"
+            id="todo"
+            placeholder="Añadir nueva tarea"
+            class="w-full p-3 border-none bg-white text-black font-medium rounded-tl-xl rounded-bl-xl outline-0 shadow-xl pl-6"
+          />
+        </div>
+        <div class="col-3">
+          <button
+            class="w-full p-3 border-none bg-white text-white font-bold uppercase rounded-tr-lg rounded-br-xl bg-gray-400 hover-bg-gray-500 shadow-xl"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- input with header  -->
+    <!-- list -->
+    <div class="row col-12 p-6 gap-3 items-list nth-child-odd-bg-gray-500">
+      <div
+        class="row col-12 item-list shadow-md p-3 pl-6 bg-gray-400 text-white rounded-xl hover-scale-9 transition-default"
+      >
+        <p class="col-11 relative transition-default">Hacer ejercicio</p>
+        <span class="col-1 text-center hover-bg-red rounded-full">x</span>
+      </div> 
+      <div
+        class="row col-12 item-list shadow-md p-3 pl-6 bg-gray-400 text-white rounded-xl hover-scale-9 transition-default"
+      >
+        <p class="col-11 relative transition-default">Hacer ejercicio</p>
+        <span class="col-1 text-center hover-bg-red rounded-full">x</span>
+      </div> 
+      <div
+        class="row col-12 item-list shadow-md p-3 pl-6 bg-gray-400 text-white rounded-xl hover-scale-9 transition-default"
+      >
+        <p class="col-11 relative transition-default">Hacer ejercicio</p>
+        <span class="col-1 text-center hover-bg-red rounded-full">x</span>
+      </div> 
+      <div
+        class="row col-12 item-list shadow-md p-3 pl-6 bg-gray-400 text-white rounded-xl hover-scale-9 transition-default"
+      >
+        <p class="col-11 relative transition-default">Hacer ejercicio</p>
+        <span class="col-1 text-center hover-bg-red rounded-full">x</span>
+      </div> 
+    </div>
+    <!-- list -->
+
+    <script>
+      // Selecciona el contenedor de la lista
+      const itemsListContainer = document.querySelector(".items-list");
+
+      // Función para marcar como completado
+      function toggleCompleted(event) {
+        const target = event.target;
+
+        // Si se hace clic en el párrafo, alterna la clase 'completed'
+        if (target.tagName.toLowerCase() === "p") {
+          target.classList.toggle("completed");
+        }
+
+        // Si se hace clic en el span 'x', elimina el elemento
+        if (target.tagName.toLowerCase() === "span") {
+          const item = target.closest(".item-list");
+          if (item) {
+            item.remove();
+          }
+        }
+      }
+
+      // Añade un listener al contenedor para manejar eventos de forma delegada
+      itemsListContainer.addEventListener("click", toggleCompleted);
+
+      // Añadir funcionalidad al botón "Add"
+      const addButton = document.querySelector("button");
+      const todoInput = document.getElementById("todo");
+
+      addButton.addEventListener("click", () => {
+        const todoText = todoInput.value.trim();
+        if (todoText !== "") {
+          // Crear nuevo elemento de tarea
+          const newItem = document.createElement("div");
+          newItem.classList.add(
+            "row",
+            "col-12",
+            "item-list",
+            "p-3",
+            "pl-6",
+            "text-white",
+            "rounded-xl",
+            "hover-scale-9",
+            "transition-default", 
+            "bg-gray-400"
+          );
+
+          // Añadir contenido
+          newItem.innerHTML = `
+            <p class="col-11 relative transition-default" >${todoText}</p>
+            <span class="col-1 text-center hover-bg-red rounded-full cursor-pointer">x</span>
+        `; 
+
+        debugger;
+
+          // Añadir al contenedor de la lista
+          itemsListContainer.appendChild(newItem);
+
+          // Limpiar el input
+          todoInput.value = "";
+        }
+      });
+
+      // Opcional: Permitir añadir tarea al presionar 'Enter'
+      todoInput.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          addButton.click();
+        }
+      });
+    </script>
+  </body>
+</html>

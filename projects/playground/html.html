@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Flexbox Utility Showcase</title>
+  <style>
+    /* Flexbox Utilities */
+
+/* Display */
+.d-flex { display: flex; }
+.d-inline-flex { display: inline-flex; }
+
+/* Flex Direction */
+.flex-row { flex-direction: row; }
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-column { flex-direction: column; }
+.flex-column-reverse { flex-direction: column-reverse; }
+
+/* Justify Content */
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+/* Align Items */
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.items-center { align-items: center; }
+.items-baseline { align-items: baseline; }
+.items-stretch { align-items: stretch; }
+
+/* Align Content */
+.content-start { align-content: flex-start; }
+.content-end { align-content: flex-end; }
+.content-center { align-content: center; }
+.content-between { align-content: space-between; }
+.content-around { align-content: space-around; }
+.content-evenly { align-content: space-evenly; }
+.content-stretch { align-content: stretch; }
+
+/* Flex Wrap */
+.flex-wrap { flex-wrap: wrap; }
+.flex-wrap-reverse { flex-wrap: wrap-reverse; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+/* Align Self */
+.self-auto { align-self: auto; }
+.self-start { align-self: flex-start; }
+.self-end { align-self: flex-end; }
+.self-center { align-self: center; }
+.self-baseline { align-self: baseline; }
+.self-stretch { align-self: stretch; }
+
+/* Flex Grow */
+.grow-0 { flex-grow: 0; }
+.grow-1 { flex-grow: 1; }
+
+/* Flex Shrink */
+.shrink-0 { flex-shrink: 0; }
+.shrink-1 { flex-shrink: 1; }
+
+/* Flex Basis */
+.basis-auto { flex-basis: auto; }
+.basis-0 { flex-basis: 0; }
+.basis-full { flex-basis: 100%; }
+
+/* Order */
+.order-0 { order: 0; }
+.order-1 { order: 1; }
+.order-2 { order: 2; }
+.order-negative-1 { order: -1; }
+
+    /* Example item styling */
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      margin: 5px;
+      text-align: center;
+      line-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flexbox Utility Showcase</h1>
+
+  <!-- Display Flex -->
+  <section>
+    <h2>Display Flex</h2>
+    <div class="d-flex" style="border: 1px solid black;">
+      <!-- Using .d-flex to enable Flexbox -->
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+    </div>
+    <p>Display: Flex makes the container a flex container, allowing child items to use Flexbox properties.</p>
+  </section>
+
+  <!-- Flex Direction -->
+  <section>
+    <h2>Flex Direction</h2>
+    <h3>Row (default)</h3>
+    <div class="d-flex flex-row">
+      <!-- Using .flex-row for horizontal layout -->
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+    </div>
+
+    <h3>Column</h3>
+    <div class="d-flex flex-column">
+      <!-- Using .flex-column for vertical layout -->
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+    </div>
+  </section>
+
+  <!-- Justify Content -->
+  <section>
+    <h2>Justify Content</h2>
+    <div class="d-flex justify-center">
+      <!-- Using .justify-center to center items horizontally -->
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+    </div>
+    <p>Justify content defines the alignment of items along the main axis (horizontal or vertical depending on flex-direction).</p>
+  </section>
+
+  <!-- Align Items -->
+  <section>
+    <h2>Align Items</h2>
+    <div class="d-flex items-center" style="height: 200px; border: 1px dashed red;">
+      <!-- Using .items-center to center items vertically -->
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+    </div>
+    <p>Align items defines the alignment of items along the cross axis (opposite of the main axis).</p>
+  </section>
+
+  <!-- Flex Wrap -->
+  <section>
+    <h2>Flex Wrap</h2>
+    <div class="d-flex flex-wrap" style="width: 300px; border: 1px solid green;">
+      <!-- Using .flex-wrap to allow items to wrap to the next line -->
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+      <div class="box">4</div>
+      <div class="box">5</div>
+    </div>
+    <p>Flex wrap controls whether items stay in a single line or wrap to the next line.</p>
+  </section>
+
+  <!-- Order -->
+  <section>
+    <h2>Order</h2>
+    <div class="d-flex">
+      <div class="box order-2">1</div>
+      <div class="box order-1">2</div>
+      <div class="box order-0">3</div>
+    </div>
+    <p>Order defines the position of items in the layout. Lower numbers appear first.</p>
+  </section>
+
+  <!-- Flex Grow & Shrink -->
+  <section>
+    <h2>Flex Grow & Shrink</h2>
+    <div class="d-flex">
+      <div class="box grow-1">Grow</div>
+      <div class="box grow-1">Shrink</div>
+      <div class="box grow-0 shrink-0">No Grow/Shrink</div>
+    </div>
+  </section>
+</body>
+</html>

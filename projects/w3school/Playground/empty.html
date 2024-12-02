@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition Effect</title>
+    <style>
+      /* Reset y estilos generales */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: Arial, sans-serif;
+      }
+
+      .page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f4f4f4;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #landing-page {
+        background: #6a0572;
+        color: white;
+      }
+
+      #main-page {
+        background: #05726a;
+        color: white;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        color: white;
+        background: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background: #555;
+      }
+
+      /* Círculo de transición */
+      #transition-circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        background: #ff6f61;
+        border-radius: 50%;
+        z-index: 99;
+        transition: transform 0.8s ease-in-out;
+      }
+
+      .scale-50 {
+        transform: translate(-50%, -50%) scale(50);
+      }
+
+      .scale-1 {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      #transition-circle.expand {
+        transform: translate(-50%, -50%) scale(40);
+      }
+
+      #transition-circle.shrink {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    </style>
+  </head>
+  <body style="overflow: hidden">
+    <div id="landing-page" class="page">
+      <h1>Landing Page</h1>
+      <button id="go-to-main" class="btn">Go to Main Page</button>
+    </div>
+
+    <div id="main-page" class="page hidden">
+      <h1>Main Page</h1>
+      <button id="back-to-landing" class="btn">Back to Landing Page</button>
+    </div>
+
+    <div id="transition-circle"></div>
+
+    <script>
+      const landingPage = document.getElementById("landing-page");
+      const mainPage = document.getElementById("main-page");
+      const transitionCircle = document.getElementById("transition-circle");
+
+      const goToMainButton = document.getElementById("go-to-main");
+      const backToLandingButton = document.getElementById("back-to-landing");
+
+      function navigateTo(targetPage, currentPage) {
+        // Expande el círculo
+        transitionCircle.classList.add("expand");
+
+        // Cambia de página después de la animación
+        setTimeout(() => {
+          currentPage.classList.add("hidden");
+          targetPage.classList.remove("hidden");
+          transitionCircle.classList.remove("expand");
+        }, 800); // Tiempo de la animación
+      }
+
+      // Botones para navegar
+      goToMainButton.addEventListener("click", () =>
+        navigateTo(mainPage, landingPage)
+      );
+
+      backToLandingButton.addEventListener("click", () =>
+      navigateTo(landingPage, mainPage)
+      );
+    </script>
+  </body>
+</html>

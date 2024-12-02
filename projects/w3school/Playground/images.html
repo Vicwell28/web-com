@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrusel Dinámico con Animación de Deslizamiento</title>
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/animate.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* Estilos para el carrusel */
+    .carousel {
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .carousel-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .images-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .images-wrapper img {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    /* Botones de navegación */
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 50px;
+      width: 50px;
+      cursor: pointer;
+      background: rgba(200, 70, 70, 0.5);
+      border-radius: 50%;
+      transition: background 0.3s;
+      z-index: 10;
+    }
+
+    .prev:hover, .next:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    /* Estilos para los botones */
+    #prev-button, #next-button {
+        background-color: black;
+      background-repeat: no-repeat;
+      background-position: center;
+      border: none;
+      outline: none;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    /* Texto del carrusel */
+    .carousel-caption-text {
+      color: white;
+      position: absolute;
+      bottom: 28px;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      text-transform: uppercase;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    /* Número del carrusel */
+    #carousel-numbers-text {
+      color: white;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    /* Bullets */
+    .bullets {
+      display: flex;
+      gap: 5px;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .bullet {
+      height: 12px;
+      width: 12px;
+      background-color: white;
+      border-radius: 50%;
+      transition: background-color 0.4s;
+      cursor: pointer;
+    }
+
+    .bullet-active {
+      background-color: #4f46e5; /* Color activo */
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .carousel {
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+      }
+
+      .prev, .next {
+        height: 40px;
+        width: 40px;
+      }
+
+      #prev-button, #next-button {
+        background-size: 16px 16px;
+      }
+
+      .carousel-caption-text {
+        font-size: 0.9rem;
+      }
+
+      #carousel-numbers-text {
+        font-size: 1.2rem;
+      }
+
+      .bullet {
+        height: 10px;
+        width: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row">
+    <div class="carousel">
+      <div id="carousel-container" class="carousel-container">
+        <div class="images-wrapper" id="images-wrapper">
+          <!-- Imágenes generadas dinámicamente -->
+        </div>
+      </div>
+      
+      <!-- Botón Anterior -->
+      <div class="prev">
+        <button
+          id="prev-button"
+          style="background-image: url('../source/icons/chevron-left.svg');"
+          aria-label="Anterior"
+        ></button>
+      </div>
+      <!-- Botón Siguiente -->
+      <div class="next">
+        <button
+          id="next-button"
+          style="background-image: url('../source/icons/chevron-right.svg');"
+          aria-label="Siguiente"
+        ></button>
+      </div>
+      <!-- Texto del Carrusel -->
+      <div class="carousel-caption-text">
+        Texto del Carrusel
+      </div>
+      <!-- Bullets -->
+      <div id="bullets" class="bullets">
+        <!-- Bullets generados dinámicamente -->
+      </div>
+      <!-- Número del Carrusel -->
+      <div id="carousel-numbers-text" class="carousel-numbers-text">
+        1/6
+      </div>
+    </div>
+   <div class="carusel-img-bottom">
+    <div class="images-wrapper-bottom d-flex row" id="images-wrapper-bottom">
+        <!-- Imagenes abajo generadas dinámicamente -->
+    </div>
+   </div>
+  </div>
+
+  <script>
+    "use strict";
+
+    // Arreglo de imágenes
+    const images = [
+      "../source/img/carousel-one.png",
+      "../source/img/carousel-two.png",
+      "../source/img/carousel-one.png",
+      "../source/img/carousel-two.png",
+      "../source/img/carousel-one.png",
+      "../source/img/carousel-two.png"
+    ];
+
+    let currentImage = 0;
+
+    const imagesWrapper = document.getElementById("images-wrapper");
+    const bulletsContainer = document.getElementById("bullets");
+    const textCarousel = document.getElementById("carousel-numbers-text");
+    const prevButton = document.getElementById("prev-button");
+    const nextButton = document.getElementById("next-button");
+    const immagesWrapperBottom = document.getElementById("images-wrapper-bottom");
+    
+
+    // Función para crear las imágenes dinámicamente
+    function createImages() {
+      images.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Imagen ${index + 1}`;
+        imagesWrapper.appendChild(img);
+      });
+
+      images.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.style.width = `${100 / images.length}%`;
+        img.src = src;
+        img.alt = `Imagen ${index + 1}`;
+        immagesWrapperBottom.appendChild(img);
+      });
+    }
+
+    // Función para crear bullets dinámicamente
+    function createBullets() {
+      bulletsContainer.innerHTML = "";
+
+      images.forEach((_, index) => {
+        const bullet = document.createElement("div");
+        bullet.classList.add("bullet");
+        bullet.setAttribute("data-index", index);
+
+        // Evento click para cada bullet
+        bullet.addEventListener("click", () => {
+          if (currentImage !== index) {
+            slideToImage(index);
+          }
+        });
+
+        bulletsContainer.appendChild(bullet);
+      });
+    }
+
+    // Función para actualizar los bullets
+    function updateBullets() {
+      const bullets = document.querySelectorAll(".bullet");
+      bullets.forEach((bullet, index) => {
+        if (index === currentImage) {
+          bullet.classList.add("bullet-active");
+        } else {
+          bullet.classList.remove("bullet-active");
+        }
+      });
+    }
+
+    // Función para actualizar el número del carrusel
+    function updateNumber() {
+      textCarousel.textContent = `${currentImage + 1}/${images.length}`;
+    }
+
+    // Función para deslizar a una imagen específica
+    function slideToImage(index) {
+      const direction = index > currentImage ? "left" : "right";
+      currentImage = index;
+      updateCarousel(direction);
+    }
+
+    // Función para actualizar el carrusel con animación
+    function updateCarousel(direction = "left") {
+      // Calcular el desplazamiento
+      const offset = -currentImage * 100;
+      imagesWrapper.style.transform = `translateX(${offset}%)`;
+
+      // Actualizar bullets y número
+      updateBullets();
+      updateNumber();
+    }
+
+    // Evento para el botón anterior
+    prevButton.addEventListener("click", () => {
+      if (currentImage > 0) {
+        currentImage--;
+      } else {
+        currentImage = images.length - 1;
+      }
+      updateCarousel();
+    });
+
+    // Evento para el botón siguiente
+    nextButton.addEventListener("click", () => {
+      if (currentImage < images.length - 1) {
+        currentImage++;
+      } else {
+        currentImage = 0;
+      }
+      updateCarousel();
+    });
+
+    // Función para crear todo al inicio
+    function initializeCarousel() {
+      createImages();
+      createBullets();
+      updateCarousel();
+    }
+
+    // Inicializar el carrusel
+    initializeCarousel();
+
+    // Autoplay con pausa al pasar el mouse
+    let autoplayInterval = setInterval(() => {
+      nextButton.click();
+    }, 5000); // Cambia cada 5 segundos
+
+    const carousel = document.querySelector(".carousel");
+
+    carousel.addEventListener("mouseenter", () => {
+      clearInterval(autoplayInterval);
+    });
+
+    carousel.addEventListener("mouseleave", () => {
+      autoplayInterval = setInterval(() => {
+        nextButton.click();
+      }, 5000);
+    });
+  </script>
+</body>
+</html>

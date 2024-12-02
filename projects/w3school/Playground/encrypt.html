@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encrypt and Decrypt</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      .btn {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p id="text" class="p-4">Mi Nombre Es Victor Miguel Basurto Juarez</p>
+    <button
+      class="btn"
+      onclick="encryptText('Mi Nombre Es Victor Miguel Basurto Juarez', document.getElementById('text'))"
+    >
+      Encrypt
+    </button>
+    <button
+      class="btn"
+      onclick="decryptText('Mi Nombre Es Victor Miguel Basurto Juarez', document.getElementById('text'))"
+    >
+      Decrypt
+    </button>
+
+    <script>
+      const textEncryptedList = [
+        "$ArV;RKZ$xPe0E9v,Z@=t+8|xf80m%@h;Wq00L[O0=.-Ap3.Cm",
+        "+V.@(uX7_d@R)j^'XdB;$#)C{E??DNO2OwB?YizS1821@,8jLX@#)z",
+        "7@c;F5Dm6f#c~ZI?*K*#T=^.UMc^|.'@0LsN1Mc£4,=]u7u!vQ",
+        "XeVJ?p,E$Y@#)K#v?W:Lp_V%1Vs$%wz;U0a9YnXNAx~Weie@M$?W",
+        "bu3:c?Fj`KP2j@OdI[)@SX'kcu$#)K#v?W:Lp_V%1^=|@HkJhYC%04",
+        "2R2=S:2'A6A3£@1y$$O2tCdUkjn[la.9?@Po%d0_~6?1_Y4£!o",
+      ];
+
+      const speed = 100;
+
+      function encryptText(originalText, targetElement) {
+        let i = 0;
+        targetElement.innerHTML = originalText;
+
+        const textEncrypted =
+          textEncryptedList[
+            Math.floor(Math.random() * textEncryptedList.length)
+          ];
+
+        const interval = setInterval(() => {
+          if (i < originalText.length) {
+            const currentText = targetElement.innerHTML;
+
+            const newChar = textEncrypted.charAt(i % textEncrypted.length);
+            const textWithSymbol = replaceCharAt(currentText, i, newChar);
+
+            targetElement.innerHTML = textWithSymbol;
+            i++;
+          } else {
+            clearInterval(interval);
+          }
+        }, speed);
+      }
+
+      function decryptText(originalText, targetElement) {
+        let i = 0;
+
+        const interval = setInterval(() => {
+          if (i < originalText.length) {
+            const currentText = targetElement.innerHTML;
+
+            const newChar = originalText.charAt(i);
+            const textWithChar = replaceCharAt(currentText, i, newChar);
+
+            targetElement.innerHTML = textWithChar;
+            i++;
+          } else {
+            clearInterval(interval);
+          }
+        }, speed);
+      }
+
+      function replaceCharAt(str, index, replacement) {
+        if (index >= str.length) {
+          return str;
+        }
+        return str.substring(0, index) + replacement + str.substring(index + 1);
+      }
+    </script>
+  </body>
+</html>

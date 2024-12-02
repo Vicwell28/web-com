@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to do</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/animate.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .content {
+        height: 200px;
+      }
+
+      /* Pseudo-elemento para el borde animado */
+      .card::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 15px 15px 15px 15px;
+        padding: 3px;
+        background: linear-gradient(270deg, violet, indigo, violet);
+        background-size: 600%;
+        z-index: 0;
+        animation: rotate-border 3s ease-out infinite alternate;
+      }
+
+      /* Animación del borde */
+      @keyframes rotate-border {
+        0% {
+          background-position: 0% 50%;
+        }
+
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="p-2">
+    <!-- How TO - Side Navigation -->
+    <div class="card relative p-1">
+      <div
+        class="content relative w-full p-2 bg-white rounded-lg overflow-hidden z-50"
+      >
+        <!-- Contenido de la tarjeta aquí -->
+        <h2>Título del Card</h2>
+        <p>Este es un ejemplo de un card con un borde animado.</p>
+      </div>
+    </div>
+    <!-- How TO - Side Navigation -->
+  </body>
+</html>

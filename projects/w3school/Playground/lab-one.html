@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to do</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/animate.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Estilos adicionales */
+      nav {
+        top: 0;
+        left: 0;
+      }
+
+      .nav-hidden {
+        top: -100px;
+      }
+
+      .nav-visible {
+        top: 0;
+      }
+
+      .nav-shrink {
+        padding: 1rem;
+      }
+
+      .nav-grow {
+        padding: 2rem;
+      }
+
+      /* Transiciones suaves */
+      .nav-hidden,
+      .nav-visible,
+      .nav-shrink,
+      .nav-grow {
+        transition: all 0.3s ease;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav
+        class="row col-12 navbar bg-black fixed w-full text-center nav-grow transition-default"
+        id="nav"
+        aria-label="Navegación Principal"
+      >
+        <a href="#home" class="nav-link text-no-underline text-white p-1"
+          >Inicio</a
+        >
+        <a href="#about" class="nav-link text-no-underline text-white p-1"
+          >Acerca de</a
+        >
+        <a href="#contact" class="nav-link text-no-underline text-white p-1"
+          >Contacto</a
+        >
+      </nav>
+    </header>
+
+    <main>
+      <!-- Sección Home -->
+      <section id="home" class="intro h-screen px-4 mt-8 pt-8">
+        <h1 class="uppercase font-black text-black">Slide Down</h1>
+        <p class="text-justify">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
+          voluptatem eligendi optio esse eius cumque quod velit consequatur
+          magni repellat nam eum, veniam nobis dolorum delectus doloribus?
+          Obcaecati, facilis deserunt...
+        </p>
+      </section>
+
+      <!-- Sección About -->
+      <section id="about" class="about h-screen bg-black text-white p-4">
+        <h2 class="uppercase font-black">Acerca de</h2>
+        <p class="text-justify">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
+          voluptatem eligendi optio esse eius cumque quod velit consequatur
+          magni repellat nam eum, veniam nobis dolorum delectus doloribus?
+          Obcaecati, facilis deserunt...
+        </p>
+      </section>
+
+      <!-- Sección Contact -->
+      <section id="contact" class="contact h-screen p-4">
+        <h2 class="uppercase font-black">Contacto</h2>
+        <p class="text-justify">
+          Aquí puedes incluir un formulario de contacto o información relevante.
+        </p>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 text-center">
+      &copy; 2024 Tu Empresa. Todos los derechos reservados.
+    </footer>
+
+    <script>
+      let lastScrollTop = 0;
+      const navElement = document.getElementById("nav");
+
+      // Función de throttling para optimizar el evento de scroll
+      function throttle(fn, wait) {
+        let time = Date.now();
+        return function () {
+          if (time + wait - Date.now() < 0) {
+            fn();
+            time = Date.now();
+          }
+        };
+      }
+
+      window.addEventListener(
+        "scroll",
+        throttle(() => {
+          const currentScroll =
+            window.pageYOffset || document.documentElement.scrollTop;
+
+          if (currentScroll > 250) {
+            if (currentScroll > lastScrollTop) {
+              // Scroll hacia abajo: ocultar la navbar
+              navElement.classList.add("nav-hidden");
+              navElement.classList.remove("nav-visible");
+            } else {
+              // Scroll hacia arriba: mostrar la navbar
+              navElement.classList.add("nav-visible");
+              navElement.classList.remove("nav-hidden");
+            }
+          } else {
+            // Menor a 250px: encoger o crecer la navbar
+            if (currentScroll > 50) {
+              navElement.classList.add("nav-shrink");
+              navElement.classList.remove("nav-grow");
+            } else {
+              navElement.classList.add("nav-grow");
+              navElement.classList.remove("nav-shrink");
+            }
+          }
+
+          lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        }, 100)
+      );
+    </script>
+  </body>
+</html>

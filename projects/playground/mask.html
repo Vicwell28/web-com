@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Texto con Fondo de Gradiente</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .gradient-text {
+        font-size: 3rem;
+        font-weight: bold;
+        background: linear-gradient(
+          to right,
+          #ff7e5f,
+          #feb47b
+        ); /* Gradiente de fondo */
+        -webkit-background-clip: text; /* Aplica el gradiente al texto */
+        color: transparent; /* Hace el texto transparente para mostrar el fondo */
+        margin-bottom: 30px;
+      }
+
+      .image-text {
+        font-size: 3rem;
+        font-weight: bold;
+        background: url("https://via.placeholder.com/600x200"); /* Imagen de fondo */
+        background-size: cover; /* Cubre toda la área del texto */
+        -webkit-background-clip: text; /* Aplica la imagen al texto */
+        color: transparent; /* Hace el texto transparente para mostrar el fondo */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gradient-text">¡Texto con fondo de gradiente!</div>
+    <div class="image-text">Texto con fondo de imagen</div>
+  </body>
+</html>
