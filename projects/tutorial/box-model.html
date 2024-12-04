@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplo del Modelo de Caja</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: "Roboto", Arial, sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: large;
+            padding: 2rem 15rem;
+            display: flex;
+            flex-direction: column;
+            align-items: right;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Estilos para las cajas */
+        .box {
+            background-color: #f0f0f0;
+            margin: 20px auto;
+            width: 500px;
+            padding: 20px;
+            border: 5px solid #333;
+            text-align: center;
+        }
+
+        /* Box-sizing: content-box (predeterminado) */
+        .content-box {
+            box-sizing: content-box;
+            background-color: #d1e7dd;
+        }
+
+        /* Box-sizing: border-box */
+        .border-box {
+            box-sizing: border-box;
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>El Modelo de Caja (Box Model) de CSS</h1>
+
+    <p>
+        El Modelo de Caja es un concepto esencial en CSS que describe cómo se
+        estructuran y calculan los elementos en una página web. Cada elemento HTML
+        se representa como una caja rectangular compuesta por cuatro partes:
+    </p>
+    <ul>
+        <li>
+            Contenido (Content): Es el contenido real del elemento, como texto,
+            imágenes, etc.
+        </li>
+        <li>Relleno (Padding): Espacio interno entre el contenido y el borde.</li>
+        <li>Borde (Border): Línea que rodea el relleno y el contenido.</li>
+        <li>
+            Margen (Margin): Espacio externo que separa el elemento de otros
+            elementos.
+        </li>
+    </ul>
+
+    <pre>
++---------------------------+
+|         Margin            |
+|  +---------------------+  |
+|  |      Border         |  |
+|  |  +---------------+  |  |
+|  |  |   Padding     |  |  |
+|  |  | +-----------+ |  |  |
+|  |  | |  Content  | |  |  |
+|  |  | +-----------+ |  |  |
+|  |  +---------------+  |  |
+|  +---------------------+  |
++---------------------------+
+    </pre>
+
+    <h2>Propiedad box-sizing</h2>
+    <p>La propiedad box-sizing controla cómo se calculan las dimensiones de un elemento. Tiene dos valores principales:
+    </p>
+
+    <ul>
+        <li>content-box (predeterminado): Las propiedades width y height sólo incluyen el contenido. El relleno y el
+            borde se agregan fuera de estas dimensiones. </li>
+        <li>border-box: Las propiedades width y height incluyen el contenido, el relleno y el borde. Esto facilita el
+            manejo de las dimensiones totales del elemento.
+        </li>
+    </ul>
+
+    <h2>Demostración del Modelo de Caja en CSS</h2>
+
+    <div class="box content-box">
+        <p>Este div utiliza <strong>box-sizing: content-box</strong>.</p>
+    </div>
+    <P>Ancho total: 200px (contenido) + 40px (padding) + 10px (borde) = 250px </P>
+
+    <div class="box border-box">
+        <p>Este div utiliza <strong>box-sizing: border-box</strong>.</p>
+    </div>
+    <P>Ancho total: 200px (incluye contenido, padding y borde)
+    </P>
+</body>
+
+</html>
