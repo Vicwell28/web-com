@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel Infinito Interactivo</title>
+    <style>
+        /* Reset de estilos básicos */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .carousel {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+            background-color: #000;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: calc(200%); /* Duplicamos el contenido para el efecto infinito */
+            animation: scroll 20s linear infinite;
+        }
+
+        .carousel-item {
+            flex: 0 0 25%; /* Ajusta el número de elementos visibles */
+            height: 200px;
+        }
+
+        /* Colores de los elementos */
+        .carousel-item:nth-child(1) { background-color: red; }
+        .carousel-item:nth-child(2) { background-color: orange; }
+        .carousel-item:nth-child(3) { background-color: blue; }
+        .carousel-item:nth-child(4) { background-color: cadetblue; }
+        /* Duplicamos los colores para el loop infinito */
+        .carousel-item:nth-child(5) { background-color: red; }
+        .carousel-item:nth-child(6) { background-color: orange; }
+        .carousel-item:nth-child(7) { background-color: blue; }
+        .carousel-item:nth-child(8) { background-color: cadetblue; }
+
+        /* Animación para mover el carrusel */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Estilos para los botones de navegación */
+        .carousel button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px;
+            transition: background 0.3s;
+            z-index: 1;
+        }
+
+        .carousel button:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .carousel .prev {
+            left: 10px;
+        }
+
+        .carousel .next {
+            right: 10px;
+        }
+
+        /* Pausar animación al interactuar */
+        .carousel.paused .carousel-track {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel" id="carousel">
+        <!-- Botones de navegación -->
+        <button class="prev" id="prevBtn">&#10094;</button>
+        <button class="next" id="nextBtn">&#10095;</button>
+
+        <!-- Pista del carrusel -->
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+            <!-- Duplicamos los elementos para el efecto infinito -->
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+        </div>
+    </div>
+
+    <script>
+        // Seleccionamos elementos del DOM
+        const carousel = document.getElementById('carousel');
+        const track = document.getElementById('carouselTrack');
+        const prevButton = document.getElementById('prevBtn');
+        const nextButton = document.getElementById('nextBtn');
+
+        // Variables para controlar la animación
+        const animationDuration = 20000; // Duración de la animación en ms
+        let isAnimating = true;
+
+        // Función para reiniciar la animación
+        function restartAnimation(direction = 'normal') {
+            track.style.animation = 'none';
+            void track.offsetWidth; // Forzar reflow para reiniciar la animación
+            track.style.animation = `scroll ${animationDuration}ms linear infinite`;
+            track.style.animationDirection = direction;
+        }
+
+        // Evento para pausar la animación al pasar el cursor
+        carousel.addEventListener('mouseenter', () => {
+            carousel.classList.add('paused');
+            isAnimating = false;
+        });
+
+        // Reanudar la animación al quitar el cursor
+        carousel.addEventListener('mouseleave', () => {
+            carousel.classList.remove('paused');
+            isAnimating = true;
+        });
+
+        // Función para avanzar el carrusel
+        function moveNext() {
+            if (!isAnimating) return;
+            restartAnimation('normal');
+        }
+
+        // Función para retroceder el carrusel
+        function movePrev() {
+            if (!isAnimating) return;
+            restartAnimation('reverse');
+        }
+
+        // Asignamos eventos a los botones
+        nextButton.addEventListener('click', moveNext);
+        prevButton.addEventListener('click', movePrev);
+
+        // Reiniciar animación al final para mantener el loop infinito
+        track.addEventListener('animationiteration', () => {
+            // No se requiere lógica adicional ya que la animación es infinita
+        });
+
+        // Inicializar animación
+        restartAnimation();
+    </script>
+</body>
+</html>
