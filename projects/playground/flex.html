@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Grid Responsivo con Flexbox</title>
+    <style>
+        /* Importar fuentes */
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal */
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            height: 3px;
+            width: 25px;
+            background-color: #fff;
+            margin-bottom: 4px;
+            border-radius: 5px;
+        }
+
+        /* Contenedor Flex para Grid */
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Permite que los ítems se envuelvan en múltiples líneas */
+            justify-content: space-between;
+            /* Distribuye el espacio entre los ítems */
+            gap: 20px;
+            /* Espacio entre ítems */
+        }
+
+        /* Ítems Flex */
+        .flex-item {
+            aspect-ratio: 16/9;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 18px;
+            flex: 12 1 calc(25% - 20px);
+            /* Base para 4 columnas menos el espacio de gap */
+            min-width: 200px;
+            /* Evita que los ítems sean demasiado pequeños */
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        /* Breakpoints */
+
+        /* 1. Móviles Pequeños: Hasta 480px */
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .flex-item {
+                flex: 1 1 100%;
+            }
+
+            /* Estilo para el menú activo */
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #333;
+                padding: 10px;
+                border-radius: 8px;
+            }
+
+            .nav-links.active li {
+                margin: 10px 0;
+            }
+        }
+
+        /* 2. Móviles Grandes/Tablets Pequeñas: 481px - 768px */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .flex-item {
+                flex: 12 1 calc(50% - 20px);
+                /* Dos columnas */
+            }   
+        }
+
+        /* 3. Tablets Grandes/Laptops: 769px - 1024px */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .flex-item {
+                flex: 12 1 calc(33.333% - 20px);
+                /* Tres columnas */
+            }
+        }
+
+        /* 4. Escritorios Grandes: Más de 1024px */
+        @media (min-width: 1025px) {
+            .flex-item {
+                flex: 12 1 calc(25% - 20px);
+                /* Cuatro columnas */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">MiLogo</div>
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Acerca de</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="flex-container">
+            <div class="flex-item">Ítem 1</div>
+            <div class="flex-item">Ítem 2</div>
+            <div class="flex-item">Ítem 3</div>
+            <div class="flex-item">Ítem 4</div>
+            <div class="flex-item">Ítem 5</div>
+            <div class="flex-item">Ítem 6</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Mi Aplicación Responsiva. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+    </script>
+</body>
+
+</html>

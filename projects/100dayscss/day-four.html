@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progreso de Pasos</title>
+    <style>
+        /* Reset y Box-Sizing */
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Estilos del Body */
+        body {
+            font-family: "Roboto", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        /* Contenedor Principal */
+        main {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        /* Sección de Pasos */
+        .steps {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        /* Línea de Progreso */
+        .progress {
+            position: absolute;
+            top: calc(50% - 2px);
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+
+        .progress-line {
+            width: 0%;
+            height: 100%;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        /* Pasos */
+        .step {
+            aspect-ratio: 1/1;
+            width: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .step-border {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 4px solid transparent;
+        }
+
+        .step-content {
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: #3498db;
+            z-index: -1;
+            transition: all 0.2s ease 0.25s;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e0e0e0;
+            z-index: -2;
+        }
+
+        .step.active::before {
+            width: 100%;
+        }
+
+        /* Botones */
+        .steps-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .steps-buttons button {
+            padding: 0.75rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .steps-buttons button:hover:not(.no-active) {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .steps-buttons button.no-active {
+            background-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="steps">
+            <div class="progress">
+                <div class="progress-line"></div>
+            </div>
+            <div class="step" data-step="1">
+                <div class="step-border">
+                    <div class="step-content">1</div>
+                </div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-border">
+                    <div class="step-content">2</div>
+                </div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-border">
+                    <div class="step-content">3</div>
+                </div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-border">
+                    <div class="step-content">4</div>
+                </div>
+            </div>
+        </section>
+        <section class="steps-buttons">
+            <button id="prevBtn" class="no-active" aria-disabled="true">Prev</button>
+            <button id="nextBtn">Next</button>
+        </section>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentStep = 1;
+            const maxSteps = 4;
+            const steps = Array.from(document.querySelectorAll(".step"));
+            const progressLine = document.querySelector(".progress-line");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+
+            // Función para actualizar la interfaz
+            function updateSteps() {
+                steps.forEach((stepElement, index) => {
+                    if (index < currentStep) {
+                        stepElement.classList.add("active");
+                    } else {
+                        stepElement.classList.remove("active");
+                    }
+                });
+
+                // Actualizar la línea de progreso
+                const progressPercentage = ((currentStep - 1) / (maxSteps - 1)) * 100;
+                progressLine.style.width = `${progressPercentage}%`;
+
+                // Actualizar estado de botones
+                if (currentStep === 1) {
+                    prevBtn.classList.add("no-active");
+                    prevBtn.setAttribute("aria-disabled", "true");
+                } else {
+                    prevBtn.classList.remove("no-active");
+                    prevBtn.removeAttribute("aria-disabled");
+                }
+
+                if (currentStep === maxSteps) {
+                    nextBtn.classList.add("no-active");
+                    nextBtn.setAttribute("aria-disabled", "true");
+                } else {
+                    nextBtn.classList.remove("no-active");
+                    nextBtn.removeAttribute("aria-disabled");
+                }
+            }
+
+            // Eventos de Botones
+            prevBtn.addEventListener("click", () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateSteps();
+                }
+            });
+
+            nextBtn.addEventListener("click", () => {
+                if (currentStep < maxSteps) {
+                    currentStep++;
+                    updateSteps();
+                }
+            });
+
+            // Inicializar el estado
+            updateSteps();
+        });
+    </script>
+</body>
+
+</html>

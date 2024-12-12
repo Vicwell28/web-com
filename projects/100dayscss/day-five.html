@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Reset y Box-Sizing */
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Estilos del Body */
+        body {
+            font-family: "Roboto", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            overflow: hidden;
+        }
+
+        main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 200px;
+            background-color: beige;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
+
+        div.container {
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(138, 138, 94);
+            z-index: 1;
+            transform-origin: 0% 0%;
+            transition: all 0.5s ease;
+            overflow-y: auto;
+        }
+
+        div.container.show-nav {
+            transform: rotate(-15deg);
+            height: 150%;
+        }
+
+        nav {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: black;
+            top: -75px;
+            left: -75px;
+            z-index: 99;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .container-img {
+            aspect-ratio: 21/9;
+            width: 100%;
+            background-color: white;
+            position: relative;
+        }
+
+        .container-text-img {
+            position: absolute;
+            width: 100%;
+            bottom: 5%;
+            color: black;
+            text-align: center;
+        }
+
+        .text-container {
+            padding: 1rem;
+            text-align: justify;
+        }
+
+        .boxs {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            padding: 0.25rem;
+            justify-content: center;
+
+        }
+
+        .box {
+            aspect-ratio: 1/1;
+            width: 25%;
+            background-color: white;
+        }
+
+        footer  {
+            width: 100%;
+            height: 150px;
+            background-color: white;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-weight: 800;
+            text-transform: uppercase;
+
+        }
+
+        header ul li {
+            color: black;
+            list-style-type: none;
+            padding: 10px;
+        }
+
+        header ul {
+            padding: 30px 15px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contact</li>
+            </ul>
+        </header>
+
+        <nav></nav>
+
+        <div class="container" id="container">
+            <h1 style="text-align: center;">Titulo</h1>
+            <div class="container-img">
+                <p class="container-text-img">Texto Img</p>
+            </div>
+            <p class="text-container">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa natus hic, corporis sapiente soluta aspernatur dicta illo quas architecto velit unde vero quam. Debitis consequuntur enim consectetur labore nesciunt unde?</p>
+            <p class="text-container">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa natus hic, corporis sapiente soluta aspernatur dicta illo quas architecto velit unde vero quam. Debitis consequuntur enim consectetur labore nesciunt unde?</p>
+            <p class="text-container">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa natus hic, corporis sapiente soluta aspernatur dicta illo quas architecto velit unde vero quam. Debitis consequuntur enim consectetur labore nesciunt unde?</p>
+            <div class="boxs">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <footer>
+                <p>footer</p>
+            </footer>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementsByTagName("nav")[0].addEventListener("click", () => {
+                document.getElementById("container").classList.toggle("show-nav");;
+            })
+        })
+    </script>
+</body>
+
+</html>
