@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Reset básico */
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 100%;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        /* Fila */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Columnas */
+        [class*="col-"] {
+            padding: 15px;
+            flex: 0 0 100%;
+            max-width: 100%;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        /* Tablets pequeñas (≥577px) */
+        @media (min-width: 577px) {
+            .col-md-1 {
+                flex: 0 0 8.333333%;
+                max-width: 8.333333%;
+            }
+
+            .col-md-2 {
+                flex: 0 0 16.666667%;
+                max-width: 16.666667%;
+            }
+
+            .col-md-3 {
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+
+            .col-md-4 {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+            }
+
+            .col-md-5 {
+                flex: 0 0 41.666667%;
+                max-width: 41.666667%;
+            }
+
+            .col-md-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .col-md-7 {
+                flex: 0 0 58.333333%;
+                max-width: 58.333333%;
+            }
+
+            .col-md-8 {
+                flex: 0 0 66.666667%;
+                max-width: 66.666667%;
+            }
+
+            .col-md-9 {
+                flex: 0 0 75%;
+                max-width: 75%;
+            }
+
+            .col-md-10 {
+                flex: 0 0 83.333333%;
+                max-width: 83.333333%;
+            }
+
+            .col-md-11 {
+                flex: 0 0 91.666667%;
+                max-width: 91.666667%;
+            }
+
+            .col-md-12 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Tablets grandes (≥768px) */
+        @media (min-width: 768px) {
+            .col-lg-1 {
+                flex: 0 0 8.333333%;
+                max-width: 8.333333%;
+            }
+
+            .col-lg-2 {
+                flex: 0 0 16.666667%;
+                max-width: 16.666667%;
+            }
+
+            .col-lg-3 {
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+
+            .col-lg-4 {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+            }
+
+            .col-lg-5 {
+                flex: 0 0 41.666667%;
+                max-width: 41.666667%;
+            }
+
+            .col-lg-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .col-lg-7 {
+                flex: 0 0 58.333333%;
+                max-width: 58.333333%;
+            }
+
+            .col-lg-8 {
+                flex: 0 0 66.666667%;
+                max-width: 66.666667%;
+            }
+
+            .col-lg-9 {
+                flex: 0 0 75%;
+                max-width: 75%;
+            }
+
+            .col-lg-10 {
+                flex: 0 0 83.333333%;
+                max-width: 83.333333%;
+            }
+
+            .col-lg-11 {
+                flex: 0 0 91.666667%;
+                max-width: 91.666667%;
+            }
+
+            .col-lg-12 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Escritorios (≥992px) */
+        @media (min-width: 992px) {
+            .col-xl-1 {
+                flex: 0 0 8.333333%;
+                max-width: 8.333333%;
+            }
+
+            .col-xl-2 {
+                flex: 0 0 16.666667%;
+                max-width: 16.666667%;
+            }
+
+            .col-xl-3 {
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+
+            .col-xl-4 {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+            }
+
+            .col-xl-5 {
+                flex: 0 0 41.666667%;
+                max-width: 41.666667%;
+            }
+
+            .col-xl-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .col-xl-7 {
+                flex: 0 0 58.333333%;
+                max-width: 58.333333%;
+            }
+
+            .col-xl-8 {
+                flex: 0 0 66.666667%;
+                max-width: 66.666667%;
+            }
+
+            .col-xl-9 {
+                flex: 0 0 75%;
+                max-width: 75%;
+            }
+
+            .col-xl-10 {
+                flex: 0 0 83.333333%;
+                max-width: 83.333333%;
+            }
+
+            .col-xl-11 {
+                flex: 0 0 91.666667%;
+                max-width: 91.666667%;
+            }
+
+            .col-xl-12 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: x-large;
+            width: 100%;
+            height: 10%;
+        }
+
+        .content {
+            width: 100%;
+            height: 90%;
+            overflow: auto;
+        }
+
+        .dropdown {
+            width: 100%;
+            border-radius: 1rem;
+            padding: 0.5rem;
+        }
+
+        .dropdown-title {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            font-weight: 600;
+            font-size: x-large;
+            background-color: white;
+            border-radius: 0.5rem;
+            transition: border-radius 0.8s ease;
+
+        }
+
+        .dropdown-text {
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+            height: 0;
+            overflow: hidden;
+            background-color: white;
+            transition: height 0.5s ease;
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+
+        .dropdown input[type="checkbox"] {
+            display: none;
+        }
+
+        .dropdown p {
+            position: relative;
+        }
+
+        .dropdown p label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* .dropdown input[type="checkbox"]:checked ~ .dropdown-text {
+            height: 100px;
+        } */
+
+        .dropdown .icon {
+            display: inline-block;
+
+            transition: transform 0.3s ease;
+            transform: rotate(270deg);
+        }
+
+        .dropdown input[type="checkbox"]:checked~.dropdown-title {
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        .dropdown input[type="checkbox"]:checked~label span.icon {
+            transform: rotate(0deg);
+        }
+
+        /* Numbers */
+        .numbers {
+            aspect-ratio: 1;
+            width: 200px;
+            background-color: black;
+            border-radius: 1rem;
+        }
+
+        .numbers-icon {
+            width: 100%;
+            height: 20%;
+        }
+
+        .numbre {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: xx-large;
+            font-weight: 500;
+        }
+
+        .numbers-title {
+            width: 100%;
+            height: 20%;
+        }
+
+
+        .key-press {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+
+        /*key-press*/
+        .key-press div {
+            aspect-ratio: 16/9;
+            width: 150px;
+            background-color: black;
+            border-radius: 1rem;
+            color: white;
+            padding: 0.5rem;
+        }
+
+        .key-press div p:nth-child(1) {
+            height: 15%;
+        }
+
+        .key-press div p:nth-child(2) {
+            height: 85%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: xxx-large;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <section class="row" style="background-color: aquamarine;">
+            <div class="col-md-12 col-lg-12 col-xl-6" style="height: calc((100vh / 2) - 15px);">
+                <p class="title">Day Ten!</p>
+                <section class="content" style="display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                flex-direction: row; 
+                gap: 1rem;">
+                    <div class="start" style="display: none;">
+                        <button>Press Any Key To Get The KeyCode</button>
+                    </div>
+                    <div class="key-press">
+                        <div class="box-event-key">
+                            <p>Event Key</p>
+                            <p id="box-event-key">Alt</p>
+                        </div>
+                        <div class="box-event-key-code">
+                            <p>Event Key Code</p>
+                            <p id="box-event-key-code">Alt</p>
+                        </div>
+                        <div class="box-event-code">
+                            <p>Event Code</p>
+                            <p id="box-event-code">Alt</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-6" style="height: calc((100vh / 2) - 15px);">
+                <p class="title">Day Ten!</p>
+                <section class="content" id="Frequently-Asked-Questions">
+                    <p>Frequently Asked Questions</p>
+                    <div class="dropdown">
+                        <input type="checkbox" name="dropdown-one" id="dropdown-one">
+                        <label for="dropdown-one" class="dropdown-title">
+                            <span>Título</span>
+                            <span class="icon">&#9660;</span>
+                        </label>
+                        <div class="dropdown-text">
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus praesentium quam
+                                temporibus aperiam sit iure rerum atque accusamus quas commodi a voluptatibus ipsa
+                                ipsam, delectus voluptas, sunt sint voluptates necessitatibus.</p>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <input type="checkbox" name="dropdown-two" id="dropdown-two">
+                        <label for="dropdown-two" class="dropdown-title">
+                            <span>Título</span>
+                            <span class="icon">&#9660;</span>
+                        </label>
+                        <div class="dropdown-text">
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus praesentium quam
+                                temporibus aperiam sit iure rerum atque accusamus quas commodi a voluptatibus ipsa
+                                ipsam, delectus voluptas, sunt sint voluptates necessitatibus.</p>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <input type="checkbox" name="dropdown-three" id="dropdown-three">
+                        <label for="dropdown-three" class="dropdown-title">
+                            <span>Título</span>
+                            <span class="icon">&#9660;</span>
+                        </label>
+                        <div class="dropdown-text">
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus praesentium quam Lorem,
+                                ipsum dolor sit amet consectetur adipisicing elit. Vel pariatur quasi explicabo quod
+                                architecto, eligendi consequuntur, vitae rerum atque consectetur soluta eos iure quae
+                                provident minus obcaecati. Incidunt, facere a? temporibus aperiam sit iure rerum atque
+                                accusamus quas commodi a voluptatibus ipsa ipsam, delectus voluptas, sunt sint
+                                voluptates necessitatibus. Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                Ullam nostrum id eaque minus architecto, ab praesentium tenetur recusandae ex dolor
+                                soluta aliquam. Corporis consequuntur quae minus debitis asperiores aspernatur tenetur.
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis cum recusandae id
+                                itaque, facere in adipisci possimus assumenda vitae necessitatibus voluptas,
+                                perspiciatis ab earum animi repudiandae nesciunt ad voluptates iste. </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-6" style="height: calc((100vh / 2) - 15px);">
+                <p class="title">Day Ten!</p>
+                <section class="content">
+
+                </section>
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-6" style="height: calc((100vh / 2) - 15px);">
+                <p class="title">Day Ten!</p>
+                <section class="content" style="display: flex; 
+                    flex-direction: row; 
+                    gap: 1rem; 
+                    align-items: center; 
+                    justify-content: center;">
+                    <div class="numbers">
+                        <div class="numbers-icon"></div>
+                        <div class="counter numbre" data-target="12000"></div>
+                        <div class="numbers-title"></div>
+                    </div>
+                    <div class="numbers">
+                        <div class="numbers-icon"></div>
+                        <div class="counter numbre" data-target="5000"></div>
+                        <div class="numbers-title"></div>
+                    </div>
+                    <div class="numbers">
+                        <div class="numbers-icon"></div>
+                        <div class="counter numbre" data-target="7500"></div>
+                        <div class="numbers-title"></div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.counter').forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000;
+                // Duración de la animación en milisegundos
+                let start = null;
+
+                // Función de animación usando requestAnimationFrame
+                const updateCounter = timestamp => {
+                    if (!start) start = timestamp;
+                    const progress = timestamp - start;
+                    const increment = Math.min((progress / duration) * target, target);
+                    counter.innerText = Math.ceil(increment).toLocaleString();
+
+                    if (progress < duration) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                    }
+                };
+
+                // Iniciar la animación
+                requestAnimationFrame(updateCounter);
+
+                document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+                    checkbox.addEventListener("change", function () {
+                        const parent = this.parentElement;
+                        const dropdownTextDiv = parent.querySelector('.dropdown-text');
+
+                        if (dropdownTextDiv) {
+                            const pTag = dropdownTextDiv.querySelector('p');
+
+                            if (pTag) {
+                                const targetHeight = pTag.scrollHeight;
+
+                                if (this.checked) {
+                                    dropdownTextDiv.style.height = `${targetHeight + 20}px`;
+                                } else {
+                                    dropdownTextDiv.style.height = '0px';
+                                }
+                            }
+                        }
+                    });
+                });
+
+
+
+                let boxEventKey = document.getElementById("box-event-key");
+                let boxEventKeyCode = document.getElementById("box-event-key-code");
+                let boxEventCode = document.getElementById("box-event-code");
+
+                // Escuchar el evento 'keydown' en todo el documento
+                document.addEventListener('keydown', function (event) {
+                    // event.key: Nombre de la tecla
+                    // event.code: Código físico de la tecla
+                    // event.keyCode: Código numérico de la tecla (obsoleto)
+
+                    const key = event.key;
+                    const code = event.code;
+                    const keyCode = event.keyCode;
+
+                    boxEventKey.textContent = key;
+                    boxEventKeyCode.textContent = keyCode;
+                    boxEventCode.textContent = code;
+
+                    boxEventKey.style.fontSize = 'xxx-large';
+                    boxEventKeyCode.style.fontSize = 'xxx-large';
+                    boxEventCode.style.fontSize = 'xxx-large';
+
+                    adjustFontSize(boxEventKey, boxEventKey.clientWidth, boxEventKey.clientHeight);
+                    adjustFontSize(boxEventKeyCode, boxEventKeyCode.clientWidth, boxEventKeyCode.clientHeight);
+                    adjustFontSize(boxEventCode, boxEventCode.clientWidth, boxEventCode.clientHeight);
+                });
+
+                function adjustFontSize(element, maxWidth, maxHeight) {
+                    let fontSize = parseInt(window.getComputedStyle(element).fontSize);
+                    
+                    while ((element.scrollWidth > maxWidth || element.scrollHeight > maxHeight) && fontSize > 10) {
+                        fontSize -= 1;
+                        element.style.fontSize = fontSize + 'px';
+                    }
+                }
+
+            });
+        })
+    </script>
+</body>
+
+</html>

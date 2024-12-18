@@ -1,11 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Animaciones de Scroll</title>
+  <style>
+    /* styles.css */
+
+    /* Estado inicial oculto */
+    .oculto {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    /* Estado visible con animación */
+    .animado {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
+
 <body>
-  
+  <p style="margin-bottom: 40rem;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, dicta ea cumque recusandae et dolore esse maiores expedita enim voluptatum ullam iure, totam id aliquid tempore eligendi eius quam corrupti!</p>
+  <section class="animacion oculto">
+    <h2>¡Hola Mundo!</h2>
+    <p>Este es un ejemplo de animación al hacer scroll.</p>
+  </section>
+
+  <section class="animacion oculto">
+    <h2>Otra Sección</h2>
+    <p>Más contenido animado.</p>
+  </section>
+
+  <script>
+    // script.js
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const elementos = document.querySelectorAll('.animacion');
+
+      const opciones = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.9 // 10% del elemento visible
+      };
+
+      const callback = (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animado');
+            observer.unobserve(entry.target); // Deja de observar después de animar
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(callback, opciones);
+
+      elementos.forEach(elemento => {
+        observer.observe(elemento);
+      });
+    });
+
+  </script>
 </body>
+
 </html>
