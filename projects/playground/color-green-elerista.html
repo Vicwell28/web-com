@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paleta de Colores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Colores principales */
+        --color-primary: #00A86B; /* Verde Rolex */
+        --color-secondary: #D4AF37; /* Dorado Elegante */
+
+        /* Gradiente principal */
+        --gradient-primary: linear-gradient(135deg, #00A86B, #006B4E); /* Verde Rolex a Verde Oscuro */
+        --gradient-secondary: linear-gradient(135deg, #00A86B, #D4AF37); /* Verde Rolex a Dorado Elegante */
+        --gradient-tertiary: linear-gradient(135deg, #D4AF37, #333333); /* Dorado Elegante a Gris Oscuro */
+        --gradient-quaternary: linear-gradient(135deg, #66CDAA, #00A86B); /* Verde Claro a Verde Rolex */
+
+        /* Colores complementarios */
+        --color-white: #FFFFFF; /* Blanco */
+        --color-black: #000000; /* Negro */
+        --color-gray-light: #F5F5F5; /* Gris Claro */
+        --color-gray-medium: #CCCCCC; /* Gris Medio */
+        --color-gray-dark: #333333; /* Gris Oscuro */
+        --color-red: #e63946; /* Rojo Vibrante */
+        --color-blue: #457b9d; /* Azul Moderado */
+        --color-green: #2a9d8f; /* Verde Esmeralda */
+        --color-beige: #F5F5DC; /* Beige Suave */
+
+        /* Colores de fondo */
+        --background-light: #F5F5DC; /* Fondo claro con un tono cálido */
+        --background-dark: #1a1a1a; /* Fondo oscuro */
+
+        /* Sombras */
+        --shadow-light: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        --shadow-medium: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mediana */
+        --shadow-heavy: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Sombra fuerte */
+
+        /* Transparencias */
+        --overlay-dark: rgba(0, 0, 0, 0.5); /* Overlay oscuro */
+        --overlay-light: rgba(255, 255, 255, 0.7); /* Overlay claro */
+      }
+
+      /* Tipografías Poppins */
+      .poppins-thin { font-family: "Poppins", sans-serif; font-weight: 100; font-style: normal; }
+      .poppins-extralight { font-family: "Poppins", sans-serif; font-weight: 200; font-style: normal; }
+      .poppins-light { font-family: "Poppins", sans-serif; font-weight: 300; font-style: normal; }
+      .poppins-regular { font-family: "Poppins", sans-serif; font-weight: 400; font-style: normal; }
+      .poppins-medium { font-family: "Poppins", sans-serif; font-weight: 500; font-style: normal; }
+      .poppins-semibold { font-family: "Poppins", sans-serif; font-weight: 600; font-style: normal; }
+      .poppins-bold { font-family: "Poppins", sans-serif; font-weight: 700; font-style: normal; }
+      .poppins-extrabold { font-family: "Poppins", sans-serif; font-weight: 800; font-style: normal; }
+      .poppins-black { font-family: "Poppins", sans-serif; font-weight: 900; font-style: normal; }
+      .poppins-thin-italic { font-family: "Poppins", sans-serif; font-weight: 100; font-style: italic; }
+      .poppins-extralight-italic { font-family: "Poppins", sans-serif; font-weight: 200; font-style: italic; }
+      .poppins-light-italic { font-family: "Poppins", sans-serif; font-weight: 300; font-style: italic; }
+      .poppins-regular-italic { font-family: "Poppins", sans-serif; font-weight: 400; font-style: italic; }
+      .poppins-medium-italic { font-family: "Poppins", sans-serif; font-weight: 500; font-style: italic; }
+      .poppins-semibold-italic { font-family: "Poppins", sans-serif; font-weight: 600; font-style: italic; }
+      .poppins-bold-italic { font-family: "Poppins", sans-serif; font-weight: 700; font-style: italic; }
+      .poppins-extrabold-italic { font-family: "Poppins", sans-serif; font-weight: 800; font-style: italic; }
+      .poppins-black-italic { font-family: "Poppins", sans-serif; font-weight: 900; font-style: italic; }
+
+      /* Colores de texto */
+      .text-primary { color: var(--color-primary); }
+      .text-secondary { color: var(--color-secondary); }
+      .text-white { color: var(--color-white); }
+      .text-black { color: var(--color-black); }
+      .text-gray-light { color: var(--color-gray-light); }
+      .text-gray-medium { color: var(--color-gray-medium); }
+      .text-gray-dark { color: var(--color-gray-dark); }
+      .text-red { color: var(--color-red); }
+      .text-blue { color: var(--color-blue); }
+      .text-green { color: var(--color-green); }
+      .text-beige { color: var(--color-beige); }
+
+      /* Colores de fondo */
+      .bg-primary { background-color: var(--color-primary); }
+      .bg-secondary { background-color: var(--color-secondary); }
+      .bg-white { background-color: var(--color-white); }
+      .bg-black { background-color: var(--color-black); }
+      .bg-gray-light { background-color: var(--color-gray-light); }
+      .bg-gray-medium { background-color: var(--color-gray-medium); }
+      .bg-gray-dark { background-color: var(--color-gray-dark); }
+      .bg-red { background-color: var(--color-red); }
+      .bg-blue { background-color: var(--color-blue); }
+      .bg-green { background-color: var(--color-green); }
+      .bg-light { background-color: var(--background-light); }
+      .bg-dark { background-color: var(--background-dark); }
+      .bg-beige { background-color: var(--color-beige); }
+
+      /* Gradientes */
+      .bg-gradient-primary { background: var(--gradient-primary); }
+      .bg-gradient-secondary { background: var(--gradient-secondary); }
+      .bg-gradient-tertiary { background: var(--gradient-tertiary); }
+      .bg-gradient-quaternary { background: var(--gradient-quaternary); }
+
+      /* Bordes */
+      .border-primary { border: 2px solid var(--color-primary); }
+      .border-secondary { border: 2px solid var(--color-secondary); }
+      .border-white { border: 2px solid var(--color-white); }
+      .border-black { border: 2px solid var(--color-black); }
+      .border-gray-light { border: 2px solid var(--color-gray-light); }
+      .border-gray-medium { border: 2px solid var(--color-gray-medium); }
+      .border-gray-dark { border: 2px solid var(--color-gray-dark); }
+      .border-red { border: 2px solid var(--color-red); }
+      .border-blue { border: 2px solid var(--color-blue); }
+      .border-green { border: 2px solid var(--color-green); }
+      .border-beige { border: 2px solid var(--color-beige); }
+
+      /* Sombras */
+      .shadow-light { box-shadow: var(--shadow-light); }
+      .shadow-medium { box-shadow: var(--shadow-medium); }
+      .shadow-heavy { box-shadow: var(--shadow-heavy); }
+
+      /* Overlays */
+      .overlay-dark { background-color: var(--overlay-dark); }
+      .overlay-light { background-color: var(--overlay-light); }
+
+      /* Display */
+      .d-flex { display: flex; }
+      .d-inline-flex { display: inline-flex; }
+
+      /* Flex Direction */
+      .flex-row { flex-direction: row; }
+      .flex-row-reverse { flex-direction: row-reverse; }
+      .flex-column { flex-direction: column; }
+      .flex-column-reverse { flex-direction: column-reverse; }
+
+      /* Justify Content */
+      .justify-start { justify-content: flex-start; }
+      .justify-end { justify-content: flex-end; }
+      .justify-center { justify-content: center; }
+      .justify-between { justify-content: space-between; }
+      .justify-around { justify-content: space-around; }
+      .justify-evenly { justify-content: space-evenly; }
+
+      /* Align Items */
+      .items-start { align-items: flex-start; }
+      .items-end { align-items: flex-end; }
+      .items-center { align-items: center; }
+      .items-baseline { align-items: baseline; }
+      .items-stretch { align-items: stretch; }
+
+      /* Align Content (for multi-line containers) */
+      .content-start { align-content: flex-start; }
+      .content-end { align-content: flex-end; }
+      .content-center { align-content: center; }
+      .content-between { align-content: space-between; }
+      .content-around { align-content: space-around; }
+      .content-evenly { align-content: space-evenly; }
+      .content-stretch { align-content: stretch; }
+
+      /* Flex Wrap */
+      .flex-wrap { flex-wrap: wrap; }
+      .flex-wrap-reverse { flex-wrap: wrap-reverse; }
+      .flex-nowrap { flex-wrap: nowrap; }
+
+      /* Align Self (for individual items) */
+      .self-auto { align-self: auto; }
+      .self-start { align-self: flex-start; }
+      .self-end { align-self: flex-end; }
+      .self-center { align-self: center; }
+      .self-baseline { align-self: baseline; }
+      .self-stretch { align-self: stretch; }
+
+      /* Flex Grow */
+      .grow-0 { flex-grow: 0; }
+      .grow-1 { flex-grow: 1; }
+
+      /* Flex Shrink */
+      .shrink-0 { flex-shrink: 0; }
+      .shrink-1 { flex-shrink: 1; }
+
+      /* Flex Basis */
+      .basis-auto { flex-basis: auto; }
+      .basis-0 { flex-basis: 0; }
+      .basis-full { flex-basis: 100%; }
+
+      /* Order */
+      .order-0 { order: 0; }
+      .order-1 { order: 1; }
+      .order-2 { order: 2; }
+      .order-negative-1 { order: -1; }
+
+      /* Padding y Gap */
+      .p-1 { padding: 1rem; }
+      .gap-1 { gap: 1rem; }
+
+      /* Tarjetas */
+      .card {
+        aspect-ratio: 4/3;
+        width: 200px;
+        border-radius: 15px;
+      }
+
+      /* General */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        background-color: var(--background-light);
+        padding: 2rem;
+      }
+
+      /* Estilos adicionales para mejor visualización */
+      p {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        border-radius: 5px;
+      }
+
+      .text-sample {
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body class="p-1 d-flex flex-row flex-wrap gap-1 justify-center">
+    <!-- Tarjetas de Colores -->
+    <div class="card border-primary bg-primary"></div>
+    <div class="card border-secondary bg-secondary"></div>
+    <div class="card border-white bg-white"></div>
+    <div class="card border-black bg-black"></div>
+    <div class="card border-gray-light bg-gray-light"></div>
+    <div class="card border-gray-medium bg-gray-medium"></div>
+    <div class="card border-gray-dark bg-gray-dark"></div>
+    <div class="card border-red bg-red"></div>
+    <div class="card border-blue bg-blue"></div>
+    <div class="card border-green bg-green"></div>
+    <div class="card border-primary bg-gradient-primary"></div>
+    <div class="card border-secondary bg-gradient-secondary"></div>
+    <div class="card border-secondary bg-gradient-tertiary"></div>
+    <div class="card border-primary bg-gradient-quaternary"></div>
+    <div class="card shadow-light border-primary bg-primary"></div>
+    <div class="card shadow-medium border-secondary bg-secondary"></div>
+    <div class="card shadow-heavy border-gray-dark bg-gray-dark"></div>
+    <div class="card shadow-light border-primary bg-gradient-primary"></div>
+    <div class="card shadow-medium border-secondary bg-gradient-secondary"></div>
+    <div class="card shadow-heavy border-gray-dark bg-gradient-tertiary"></div>
+
+    <!-- Muestras de Texto -->
+    <div class="w-full">
+      <p class="text-primary text-sample">Texto Primario (#00A86B)</p>
+      <p class="text-secondary text-sample">Texto Secundario (#D4AF37)</p>
+      <p class="text-white text-sample bg-black">Texto Blanco (#FFFFFF) sobre Negro</p>
+      <p class="text-black text-sample">Texto Negro (#000000)</p>
+      <p class="text-gray-light text-sample">Texto Gris Claro (#F5F5F5)</p>
+      <p class="text-gray-medium text-sample">Texto Gris Medio (#CCCCCC)</p>
+      <p class="text-gray-dark text-sample">Texto Gris Oscuro (#333333)</p>
+      <p class="text-red text-sample">Texto Rojo Vibrante (#e63946)</p>
+      <p class="text-blue text-sample">Texto Azul Moderado (#457b9d)</p>
+      <p class="text-green text-sample">Texto Verde Esmeralda (#2a9d8f)</p>
+
+      <p class="bg-primary p-1 text-white text-sample">Fondo Primario (#00A86B) con Texto Blanco</p>
+      <p class="bg-secondary p-1 text-black text-sample">Fondo Secundario (#D4AF37) con Texto Negro</p>
+      <p class="bg-white p-1 text-primary text-sample">Fondo Blanco (#FFFFFF) con Texto Primario</p>
+      <p class="bg-black p-1 text-white text-sample">Fondo Negro (#000000) con Texto Blanco</p>
+      <p class="bg-gray-light p-1 text-black text-sample">Fondo Gris Claro (#F5F5F5) con Texto Negro</p>
+      <p class="bg-gray-medium p-1 text-white text-sample">Fondo Gris Medio (#CCCCCC) con Texto Blanco</p>
+      <p class="bg-gray-dark p-1 text-gray-light text-sample">Fondo Gris Oscuro (#333333) con Texto Gris Claro</p>
+      <p class="bg-red p-1 text-white text-sample">Fondo Rojo Vibrante (#e63946) con Texto Blanco</p>
+      <p class="bg-blue p-1 text-white text-sample">Fondo Azul Moderado (#457b9d) con Texto Blanco</p>
+      <p class="bg-green p-1 text-white text-sample">Fondo Verde Esmeralda (#2a9d8f) con Texto Blanco</p>
+    </div>
+  </body>
+</html>

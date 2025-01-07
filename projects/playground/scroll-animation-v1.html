@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Animaciones Reutilizables + IntersectionObserver (Extendido)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: black;
+            width: 100%;
+            height: 500vh;
+        }
+
+        .boxes {
+            width: 100%;
+            position: absolute;
+            top: 250vh;
+            transform: translateY(-50%);
+            background-color: white;
+            height: 150px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .box {
+            aspect-ratio: 1/1;
+            height: 90%;
+            background-color: rebeccapurple;
+        }
+
+        /* ----------------------------------
+        1) ANIMACIONES CON TRANSITION
+        -------------------------------------*/
+
+        /* FADE */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+        }
+
+        .fade-out {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-out.hide {
+            opacity: 0;
+        }
+
+        /* SLIDE IN / OUT */
+        .slide-in-left {
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-in-left.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .slide-out-left {
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-out-left.hide {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        /* Slide-in-right */
+        .slide-in-right {
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-in-right.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* Slide-out-right */
+        .slide-out-right {
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-out-right.hide {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        /* Slide-in-up */
+        .slide-in-up {
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-in-up.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Slide-out-up */
+        .slide-out-up {
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-out-up.hide {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        /* Slide-in-down */
+        .slide-in-down {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-in-down.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Slide-out-down */
+        .slide-out-down {
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .slide-out-down.hide {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        /* ZOOM */
+        .zoom-in {
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .zoom-in.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .zoom-out {
+            transform: scale(1);
+            opacity: 1;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .zoom-out.hide {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* ----------------------------------
+        2) ANIMACIONES CON @KEYFRAMES
+        -------------------------------------*/
+
+        /*
+        Ejemplo 1: "fadeZoomIn"
+        Combinamos opacidad y escala con un keyframe
+        */
+        @keyframes fadeZoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            60% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fade-zoom-in {
+            /* Para iniciar invisible (opcional si quieres) */
+            opacity: 0;
+        }
+
+        /* Al agregar .show, le disparamos la animación */
+        .fade-zoom-in.show {
+            animation: fadeZoomIn 1s ease forwards;
+        }
+
+        /*
+        Ejemplo 2: "bounceDown"
+        El elemento entra desde arriba con un rebote final
+        */
+        @keyframes bounceDown {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            60% {
+                transform: translateY(20%);
+            }
+
+            80% {
+                transform: translateY(-10%);
+            }
+
+            100% {
+                transform: translateY(0%);
+            }
+        }
+
+        .bounce-down {
+            opacity: 0;
+            /* Colocamos la posición inicial un poco fuera */
+            transform: translateY(-100%);
+        }
+
+        .bounce-down.show {
+            animation: bounceDown 0.8s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+            /* La animación maneja la parte de transform */
+            /* Con 'forwards', se queda en la posición final */
+            opacity: 1;
+        }
+
+        /*
+        Ejemplo 3: "spinIn"
+        Gira desde 0 a 360 mientras aparece
+        */
+        @keyframes spinIn {
+            0% {
+                opacity: 0;
+                transform: rotate(0deg) scale(0.3);
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        .spin-in {
+            opacity: 0;
+        }
+
+        .spin-in.show {
+            animation: spinIn 1s ease forwards;
+        }
+
+        /*
+        Ejemplo 4: "slideUpFade"
+        Combina un desplazamiento hacia arriba con fade
+        */
+        @keyframes slideUpFade {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-up-fade {
+            opacity: 0;
+        }
+
+        .slide-up-fade.show {
+            animation: slideUpFade 0.6s ease forwards;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="boxes">
+
+        <!-- Ejemplo A: Solo animación de entrada (fade-in con transition) -->
+        <div class="box fade-in" data-anim-in="fade-in">
+        </div>
+
+        <!-- Ejemplo B: Solo animación de salida (fade-out con transition) -->
+        <div class="box fade-out hide" data-anim-out="fade-out">
+        </div>
+
+        <!-- Ejemplo C: Slide-in-left + slide-out-left -->
+        <div class="box slide-in-left" data-anim-in="slide-in-left" data-anim-out="slide-out-left hide">
+        </div>
+
+        <!-- Ejemplo D: Sin animaciones (normal) -->
+        <div class="box"></div>
+
+        <!-- Ejemplo E: Zoom in/out con transition -->
+        <div class="box zoom-in" data-anim-in="zoom-in" data-anim-out="zoom-out hide">
+        </div>
+
+        <!-- Ejemplo F: fadeZoomIn con @keyframes (entrada) -->
+        <div class="box fade-zoom-in" data-anim-in="fade-zoom-in">
+        </div>
+
+        <!-- Ejemplo G: bounce-down con @keyframes (entrada) -->
+        <div class="box bounce-down" data-anim-in="bounce-down">
+        </div>
+
+        <!-- Ejemplo H: spin-in con @keyframes (entrada) -->
+        <div class="box spin-in" data-anim-in="spin-in">
+        </div>
+
+        <!-- Ejemplo I: slide-up-fade con @keyframes (entrada) -->
+        <div class="box slide-up-fade" data-anim-in="slide-up-fade">
+        </div>
+
+    </div>
+
+    <script>
+        // Config del Observer
+        const options = {
+            threshold: 0.1
+        };
+
+        // Creamos un único IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const el = entry.target;
+
+                // 1. Animación de ENTRADA (si data-anim-in existe)
+                if (el.dataset.animIn) {
+                    if (entry.isIntersecting) {
+                        // El elemento entra al viewport => Agregamos .show
+                        el.classList.add('show');
+                    } else {
+                        // Sale del viewport => Quitamos .show (para que se "resete" si vuelve)
+                        el.classList.remove('show');
+                    }
+                }
+
+                // 2. Animación de SALIDA (si data-anim-out existe)
+                if (el.dataset.animOut) {
+                    if (entry.isIntersecting) {
+                        // Está en viewport => Quitamos .hide (así se ve)
+                        el.classList.remove('hide');
+                    } else {
+                        // Sale => Agregamos .hide (dispara la animación de salida)
+                        el.classList.add('hide');
+                    }
+                }
+            });
+        }, options);
+
+        // Observamos todos los elementos que tengan data-anim-in o data-anim-out (o ambos)
+        document.querySelectorAll('[data-anim-in], [data-anim-out]').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
