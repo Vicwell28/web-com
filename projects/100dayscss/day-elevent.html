@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drink Water</title>
+  <style>
+    :root {
+      --background-color: #3493e4;
+      --text-color: white;
+      --button-bg: black;
+      --transition-speed: 0.5s;
+      --font-family: "Roboto", sans-serif;
+      --font-size-container: 1.2rem;
+      --font-size-button: 0.9rem;
+      --water-color: blue;
+      --fill-color: aqua;
+    }
+
+    /* RESET BÁSICO */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ESTILOS DEL BODY */
+    body {
+      height: 100vh;
+      width: 100%;
+      background-color: var(--background-color);
+      font-family: var(--font-family);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    /* CONTENEDOR PRINCIPAL DE AGUA */
+    .glass-water {
+      margin: 1rem;
+      width: 10rem;
+      height: 20rem;
+      border-radius: 0 0 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      border: 2.5px solid #144fc6;
+    }
+
+    /* CONTENEDORES PARA REMAINDER Y PERCENTAGE */
+    .glass-water div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s linear;
+      overflow: hidden;
+    }
+
+    .reminder {
+      height: 100%;
+      background-color: white;
+      color: black;
+      font-weight: bold;
+    }
+
+    .percentage {
+      height: 0;
+      background-color: var(--background-color);
+      font-weight: bold;
+    }
+
+    .reminder-text, .percentage-text {
+      font-size: 1.3rem;
+      pointer-events: none;
+    }
+
+    /* CONTENEDOR DE LOS VASOS PEQUEÑOS */
+    .glasses-water {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .glasses-water div {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    /* VASOS PEQUEÑOS */
+    .mini-glass-water {
+      width: 4rem;
+      height: 8rem;
+      border-radius: 0 0 1rem 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.25s linear;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      color: black;
+      font-weight: bold;
+      border: 2.5px solid #144fc6;
+    }
+
+    .mini-glass-water label {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      transition: color 0.25s linear;
+    }
+
+    /* OCULTAR INPUT CHECKBOX */
+    input {
+      display: none;
+    }
+
+    /* CUANDO EL CHECKBOX ESTÉ SELECCIONADO, CAMBIA EL ESTILO */
+    input:checked + .mini-glass-water {
+      background-color: var(--background-color);
+    }
+
+    input:checked + .mini-glass-water label {
+      color: white;
+    }
+
+    body > h1, body > p, body > div {
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.3s linear;
+    }
+
+    body > h1.show, body > p.show, body > div.show {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Drink Water</h1>
+  <p>Goal: 2 Litres</p>
+
+  <!-- CONTENEDOR DE AGUA GRANDE -->
+  <div class="glass-water">
+    <div class="reminder" id="reminder">
+      <p class="reminder-text"><span id="reminder-number">2</span>L</p>
+      <p>Remained</p>
+    </div>
+    <div class="percentage" id="percentage">
+      <p class="percentage-text"><span id="percentage-number">0</span>%</p>
+    </div>
+  </div>
+
+  <p>Select How many Glasses of Water that you have Drank</p>
+
+  <!-- VASOS PEQUEÑOS -->
+  <div class="glasses-water">
+
+    <div>
+        <!-- 1 -->
+        <input type="checkbox" id="mini-glass-1" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-1"><span>250</span><span>ml</span></label>
+        </div>
+        <!-- 2 -->
+        <input type="checkbox" id="mini-glass-2" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-2"><span>250</span><span>ml</span></label>
+        </div>
+        <!-- 3 -->
+        <input type="checkbox" id="mini-glass-3" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-3"><span>250</span><span>ml</span></label>
+        </div>
+        <!-- 4 -->
+        <input type="checkbox" id="mini-glass-4" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-4"><span>250</span><span>ml</span></label>
+        </div>
+    </div>
+
+    <div>
+        <!-- 5 -->
+        <input type="checkbox" id="mini-glass-5" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-5"><span>250</span><span>ml</span></label>
+        </div>
+        <!-- 6 -->
+        <input type="checkbox" id="mini-glass-6" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-6"><span>250</span><span>ml</span></label>
+        </div>
+        <!-- 7 -->
+        <input type="checkbox" id="mini-glass-7" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-7"><span>250</span><span>ml</span></label>
+        </div>
+        <!-- 8 -->
+        <input type="checkbox" id="mini-glass-8" />
+        <div class="mini-glass-water">
+        <label for="mini-glass-8"><span>250</span><span>ml</span></label>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // REFERENCIAS A ELEMENTOS DEL DOM
+    const reminder   = document.getElementById('reminder');
+    const percentage = document.getElementById('percentage');
+    const reminderText   = document.getElementById('reminder-number');
+    const percentageText = document.getElementById('percentage-number');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const childrenDirect = document.body.children;
+
+    // VALORES GLOBALES
+    const totalGlasses = 8;     // Cantidad de vasos
+    const totalLitres  = 2;     // Objetivo en litros
+    const mlPerGlass   = 0.25;  // Equivale a 250 ml = 0.25 L
+
+    // Para animar la transición de números
+    // Puedes ajustarle la "velocidad" en la variable 'duration'
+    function animateValue(element, start, end, duration = 500) {
+      const range = end - start;
+      let startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const value = start + range * progress;
+        
+        // Si tu número es decimal, ajusta el redondeo al gusto
+        element.textContent = value.toFixed(2).replace(/\.00$/, '');
+        
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Para registrar el valor anterior de reminder y porcentaje
+    let oldReminderValue   = totalLitres; // Arranca en 2 L
+    let oldPercentageValue = 0;          // Arranca en 0%
+
+    // FUNCIÓN PRINCIPAL: Se ejecuta cada vez que cambie un checkbox
+    function updateWaterIntake() {
+      // Cantidad de checkboxes marcados
+      const checkedCount = Array.from(checkboxes).filter(input => input.checked).length;
+
+      // Calculamos nuevo reminder y nuevo porcentaje
+      const newReminderLitres = totalLitres - (checkedCount * mlPerGlass);
+      const newPercentage     = (checkedCount / totalGlasses) * 100;
+
+      // Calculamos la nueva altura
+      const reminderHeight   = 100 - newPercentage; // 100% - el % bebido
+      const percentageHeight = newPercentage;       // El % bebido
+
+      // Asignamos las alturas (animadas en CSS con transition)
+      reminder.style.height   = `${reminderHeight}%`;
+      percentage.style.height = `${percentageHeight}%`;
+
+      // Animamos la transición de valores numéricos
+      animateValue(reminderText, oldReminderValue, newReminderLitres, 500);
+      animateValue(percentageText, oldPercentageValue, newPercentage, 500);
+
+      // Guardamos los nuevos valores para la próxima animación
+      oldReminderValue   = newReminderLitres;
+      oldPercentageValue = newPercentage;
+    }
+
+    // AÑADIR EVENT LISTENER A TODOS LOS CHECKBOX
+    checkboxes.forEach(input => {
+      input.addEventListener('change', updateWaterIntake);
+    });
+
+
+    // Animación inicial con Intersection Observer 
+    const options = { threshold: 0.1 };
+
+    const observer = new IntersectionObserver((entries, observerInstance) => { 
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observerInstance.unobserve(entry.target); 
+            } 
+        })
+    }, options);
+
+    Array.from(childrenDirect).forEach((element) => observer.observe(element));
+
+  </script>
+</body>
+</html>
